@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elvis Chen (nutcelvischen-jpg) · Git & Skill Hub</title>
+  <meta name="description" content="Elvis Chen 的專案、AI Agent Skills、3D 網頁遊戲與數據戰情室全集目錄">
+  <style>
+    :root {
+      --bg: #0d1117;
+      --card-bg: #161b22;
+      --border: #30363d;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --accent: #58a6ff;
+      --tag-bg: #21262d;
+      --tag-border: #363b42;
+      --btn-bg: #21262d;
+      --btn-border: #363b42;
+      --btn-hover: #30363d;
+      --code-bg: #1f242c;
+      --font-mono: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, monospace;
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #ffffff;
+        --card-bg: #f6f8fa;
+        --border: #d0d7de;
+        --text: #1f2328;
+        --text-muted: #656d76;
+        --accent: #0969da;
+        --tag-bg: #eaeef2;
+        --tag-border: #d0d7de;
+        --btn-bg: #f6f8fa;
+        --btn-border: #d0d7de;
+        --btn-hover: #eaeef2;
+        --code-bg: #eff2f5;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 32px 16px 80px;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    /* Header */
+    header {
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+    .user-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+    }
+    .title-group h1 {
+      font-size: 1.35rem;
+      font-weight: 600;
+    }
+    .title-group p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    .header-links a {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.88rem;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--card-bg);
+    }
+    .header-links a:hover {
+      background: var(--btn-hover);
+    }
+    /* Plain Skill Tip */
+    .skill-notice {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: 6px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+    .skill-notice code {
+      font-family: var(--font-mono);
+      background: var(--code-bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.82rem;
+    }
+    /* Toolbar */
+    .toolbar {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .search-input {
+      width: 100%;
+      padding: 10px 14px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-size: 0.92rem;
+      outline: none;
+    }
+    .search-input:focus {
+      border-color: var(--accent);
+    }
+    .filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .pill {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 0.84rem;
+      padding: 5px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.15s;
+    }
+    .pill:hover {
+      background: var(--btn-hover);
+    }
+    .pill.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+    /* Stats indicator */
+    .count-indicator {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    /* List */
+    .repo-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .repo-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 16px;
+      transition: border-color 0.15s;
+    }
+    .repo-item:hover {
+      border-color: var(--accent);
+    }
+    .repo-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+    }
+    .repo-name-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .repo-name {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .repo-name:hover {
+      text-decoration: underline;
+    }
+    .badge {
+      font-size: 0.75rem;
+      padding: 1px 7px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+    .badge-live {
+      color: #3fb950;
+      border-color: rgba(63, 185, 80, 0.4);
+      background: rgba(63, 185, 80, 0.08);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .badge-live:hover {
+      text-decoration: underline;
+    }
+    .badge-skill {
+      color: #bc8cff;
+      border-color: rgba(188, 140, 255, 0.4);
+      background: rgba(188, 140, 255, 0.08);
+    }
+    .repo-desc {
+      font-size: 0.9rem;
+      color: var(--text);
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+    .repo-topics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+    .topic-tag {
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 12px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+    .repo-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      padding-top: 10px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .repo-meta {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .actions {
+      display: flex;
+      gap: 8px;
+    }
+    .btn {
+      font-size: 0.8rem;
+      padding: 4px 10px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 500;
+      border: 1px solid var(--btn-border);
+      background: var(--btn-bg);
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .btn:hover {
+      background: var(--btn-hover);
+    }
+    .btn-primary {
+      background: #238636;
+      border-color: #2ea043;
+      color: #ffffff;
+    }
+    .btn-primary:hover {
+      background: #2ea043;
+    }
+    footer {
+      margin-top: 48px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="user-bar">
+        <div class="user-info">
+          <img class="avatar" src="https://github.com/nutcelvischen-jpg.png" alt="Elvis Chen">
+          <div class="title-group">
+            <h1>nutcelvischen-jpg <span>/</span> hub</h1>
+            <p>Elvis Chen · 專案、AI Agent Skills 與網頁互動作品全集</p>
+          </div>
+        </div>
+        <div class="header-links">
+          <a href="https://github.com/nutcelvischen-jpg" target="_blank">GitHub 個人主頁 ↗</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="skill-notice">
+      💡 <strong>AI Agent Skill 本地載入指令：</strong><br>
+      <code>git clone https://github.com/nutcelvischen-jpg/&lt;skill-name&gt;.git ~/.gemini/config/skills/&lt;skill-name&gt;</code>
+    </div>
+
+    <div class="toolbar">
+      <input type="text" id="search" class="search-input" placeholder="輸入關鍵字搜尋專案名稱、標籤或說明 (按 / 快速鍵對焦)..." autocomplete="off">
+      <div class="filter-pills">
+        <button class="pill active" data-cat="all">全部 (All 40)</button>
+        <button class="pill" data-cat="skills">🤖 AI Agent Skills (10)</button>
+        <button class="pill" data-cat="games">🎮 3D & 互動遊戲 (10)</button>
+        <button class="pill" data-cat="dashboards">📊 數據戰情室 (9)</button>
+        <button class="pill" data-cat="campus">🏛️ 校園行政與工具 (11)</button>
+        <button class="pill" data-cat="live">🌐 僅看在線版 (Live Demos 27)</button>
+      </div>
+    </div>
+
+    <div class="count-indicator">
+      <span id="result-count">顯示 40 個項目</span>
+      <span>傳統 Git 素色版 (Minimal Developer Theme)</span>
+    </div>
+
+    <main class="repo-list" id="repo-list"></main>
+
+    <footer>
+      <p>Elvis Chen (nutcelvischen-jpg) · Hosted on GitHub Pages · 2026</p>
+    </footer>
+  </div>
+
+  <script>
+    const repos = [{"name": "gas-line-order-notify", "description": "Google Apps Script × LINE 訂單即時推播通知與小白進銷存自動化 Skill", "category": "skills", "topics": [], "has_page": true, "demo_url": "https://nutcelvischen-jpg.github.io/gas-line-order-notify/", "repo_url": "https://github.com/nutcelvischen-jpg/gas-line-order-notify", "language": "JavaScript", "is_private": false, "updated_at": "2026-10-27"}, {"name": "procedural-character-craft", "description": "純程式化向量卡通角色設計與動畫製作套件 (Procedural Vector Cartoon Character Craft) — 100% Code, Zero Assets, Lip-sync & Procedural Animation", "category": "skills", "topics": [], "has_page": true, "demo_url": "https://nutcelvischen-jpg.github.io/procedural-character-craft/", "repo_url": "https://github.com/nutcelvischen-jpg/procedural-character-craft", "language": "Python", "is_private": false, "updated_at": "2026-10-23"}, {"name": "shotgameskill", "description": "AI Agent Skill: 快速構建 3D Web 物理趣味小遊戲 (Blender + Three.js)", "category": "skills", "topics": ["agent-skill", "blender", "game-development", "threejs"], "has_page": true, "demo_url": "https://nutcelvischen-jpg.github.io/shotgameskill/", "repo_url": "https://github.com/nutcelvischen-jpg/shotgameskill", "language": "Python", "is_private": false, "updated_at": "2026-10-21"}, {"name": "Skinning-and-Morphing", "description": "WebGL 骨骼動畫與形變 (Skinning & Morphing) 3D 渲染實驗", "category": "games", "topics": ["graphics", "morphing", "skinning", "threejs", "webgl"], "has_page": true, "demo_url": "https://nutcelvischen-jpg.github.io/Skinning-and-Morphing/", "repo_url": "https://github.com/nutcelvischen-jpg/Skinning-and-Morphing", "language": "HTML", "is_private": false, "updated_at": "2025-12-02"}, {"name": "alpha-wave", "description": "Alpha 腦波音樂與放鬆音頻互動生成器", "category": "campus", "topics": ["alpha-waves", "audio", "relaxation", "web-audio"], "has_page": true, "demo_url": "https://nutcelvischen-jpg.github.io/alpha-wave/", "repo_url": "https://github.com/nutcelvischen-jpg/alpha-wave", "language": "HTML", "is_private": false, "updated_at": "2026-10-07"}, {"name": "banana-dunk", "description": "Three.js 香蕉灌籃物理拋物線互動趣味小遊戲", "category": "games", "topics": ["mini-game", "physics", "threejs", "webgl"], "has_page": true, "demo_url": "https://nutcelvischen-jpg.github.io/banana-dunk/", "repo_url": "https://github.com/nutcelvischen-jpg/banana-dunk", "language": "HTML", "is_private": false, "updated_at": "2026-10-21"}, {"name": "cowboy-balance", "description": "Three.js 牛仔平衡物理平衡控制互動網頁遊戲", "category": "games", "topics": ["interactive", "physics-game", "threejs", "web-game"], "has_page": true, "demo_url": "https://nutcelvischen-jpg.github.io/cowboy-balance/", "repo_url": "https://github.com/nutcelvischen-jpg/cowboy-balance", "language": "JavaScript", "is_private": false, "updated_at": "2026-10-22"}, {"name": "cv", "description": "個人互動履歷與技術專長展示頁面", "category": "campus", "topics": ["interactive-cv", "portfolio", "resume", "web-profile"], "has_page": true, "demo_url": "https://nutcelvischen-jpg.github.io/cv/", "repo_url": "https://github.com/nutcelvischen-jpg/cv", "language": "HTML", "is_private": false, "updated_at": "2026-06-08"}, {"name": "elvischen", "description": "personalweb", "category": "campus", "topics": [], "has_page": true, "demo_url": "https://nutcelvischen-jpg.github.io/elvischen/", "repo_url": "https://github.com/nutcelvischen-jpg/elvischen", "language": "HTML", "is_private": false, "updated_at": "2025-11-25"}, {"name": "game", "description": "HTML5 Canvas 經典休閒小遊戲", "category": "games", "topics": ["canvas", "html5", "web-game"], "has_page": true, "demo_url": "https://nutcelvischen-jpg.github.io/game/", "repo_url": "https://github.com/nutcelvischen-jpg/game", "language": "HTML", "is_private": false, "updated_at": "2025-11-29"}, {"name": "halloween-wardrobe", "description": "Interactive Halloween costume gallery with editable SVG avatars", "category": "games", "topics": [], "has_page": true, "demo_url": "https://nutcelvischen-jpg.github.io/halloween-wardrobe/", "repo_url": "https://github.com/nutcelvischen-jpg/halloween-wardrobe", "language": "HTML", "is_private": false, "updated_at": "2026-10-17"}, {"name": "nantou-6670-occ", "description": "南投客運 6670 路線載客率與班距動態儀表板", "category": "dashboards", "topics": ["dashboard", "data-analysis", "visualization", "taiwan-transit"], "has_page": true, "demo_url": "https://nutcelvischen-jpg.github.io/nantou-6670-occ/", "repo_url": "https://github.com/nutcelvischen-jpg/nantou-6670-occ", "language": "HTML", "is_private": false, "updated_at": "2026-10-25"}, {"name": "night-market-hammer", "description": "台灣夜市打地鼠與力道敲擊互動小遊戲 (Web 桌面版)", "category": "games", "topics": ["arcade", "night-market", "threejs", "web-game"], "has_page": true, "demo_url": "https://nutcelvischen-jpg.github.io/night-market-hammer/", "repo_url": "https://github.com/nutcelvischen-jpg/night-market-hammer", "language": "HTML", "is_private": false, "updated_at": "2026-10-22"}, {"name": "night-market-hammer-mobile", "description": "台灣夜市敲擊互動小遊戲 (行動裝置 Mobile 觸控優化版)", "category": "games", "topics": ["mobile-game", "night-market", "touch-controls", "web-game"], "has_page": true, "demo_url": "https://nutcelvischen-jpg.github.io/night-market-hammer-mobile/", "repo_url": "https://github.com/nutcelvischen-jpg/night-market-hammer-mobile", "language": "JavaScript", "is_private": false, "updated_at": "2026-10-22"}, {"name": "probast-ai-slides", "description": "PROBAST 醫學 AI 預測模型偏倚風險評估互動簡報", "category": "campus", "topics": ["medical-ai", "probast", "risk-assessment", "slides"], "has_page": true, "demo_url": "https://nutcelvischen-jpg.github.io/probast-ai-slides/", "repo_url": "https://github.com/nutcelvischen-jpg/probast-ai-slides", "language": "HTML", "is_private": false, "updated_at": "2026-10-07"}, {"name": "punch-clock-system", "description": "線上員工考勤與上下班打卡系統", "category": "campus", "topics": ["attendance", "management", "punch-clock", "web-app"], "has_page": true, "demo_url": "https://nutcelvischen-jpg.github.io/punch-clock-system/", "repo_url": "https://github.com/nutcelvischen-jpg/punch-clock-system", "language": "HTML", "is_private": false, "updated_at": "2026-08-06"}, {"name": "python-learning-site", "description": "🐍 Python 學堂 - 從零基礎到數據分析的完整教學網站", "category": "campus", "topics": [], "has_page": true, "demo_url": "https://nutcelvischen-jpg.github.io/python-learning-site/", "repo_url": "https://github.com/nutcelvischen-jpg/python-learning-site", "language": "Python", "is_private": false, "updated_at": "2026-06-04"}, {"name": "r-viz-site", "description": "R 語言資料視覺化與統計圖表互動教學網站", "category": "dashboards", "topics": ["data-visualization", "r-stats", "rstats", "tutorial"], "has_page": true, "demo_url": "https://nutcelvischen-jpg.github.io/r-viz-site/", "repo_url": "https://github.com/nutcelvischen-jpg/r-viz-site", "language": "HTML", "is_private": false, "updated_at": "2026-06-09"}, {"name": "screwfix-bits-dashboard", "description": "Screwfix 螺絲起子頭規格爬蟲與數據視覺化儀表板", "category": "dashboards", "topics": ["dashboard", "data-visualization", "scraper", "screwfix"], "has_page": true, "demo_url": "https://nutcelvischen-jpg.github.io/screwfix-bits-dashboard/", "repo_url": "https://github.com/nutcelvischen-jpg/screwfix-bits-dashboard", "language": "HTML", "is_private": false, "updated_at": "2026-06-17"}, {"name": "screwfix-impact-wrench", "description": "Screwfix Impact Wrench scraper + data dashboard (110 products, 7 brands, full spec sheets)", "category": "dashboards", "topics": [], "has_page": true, "demo_url": "https://nutcelvischen-jpg.github.io/screwfix-impact-wrench/", "repo_url": "https://github.com/nutcelvischen-jpg/screwfix-impact-wrench", "language": "HTML", "is_private": false, "updated_at": "2026-07-06"}, {"name": "shoes", "description": "3D 運動鞋展示與配色自訂互動展示器", "category": "games", "topics": ["3d-product", "customizer", "shoes", "threejs"], "has_page": true, "demo_url": "https://nutcelvischen-jpg.github.io/shoes/", "repo_url": "https://github.com/nutcelvischen-jpg/shoes", "language": "HTML", "is_private": false, "updated_at": "2025-11-25"}, {"name": "shotgame", "description": "3D 物理瞄準與投擲趣味網頁遊戲 (Blender + Three.js)", "category": "games", "topics": [], "has_page": true, "demo_url": "https://nutcelvischen-jpg.github.io/shotgame/", "repo_url": "https://github.com/nutcelvischen-jpg/shotgame", "language": "HTML", "is_private": false, "updated_at": "2026-10-21"}, {"name": "taichung-delivery-dashboard", "description": "Taichung City Delivery Driver Traffic Accidents Analytics Dashboard (2022-2026)", "category": "dashboards", "topics": [], "has_page": true, "demo_url": "https://nutcelvischen-jpg.github.io/taichung-delivery-dashboard/", "repo_url": "https://github.com/nutcelvischen-jpg/taichung-delivery-dashboard", "language": "HTML", "is_private": false, "updated_at": "2026-09-30"}, {"name": "tankgame", "description": "WebGL 坦克對戰物理射擊小遊戲", "category": "games", "topics": ["physics", "tank-game", "threejs", "webgl"], "has_page": true, "demo_url": "https://nutcelvischen-jpg.github.io/tankgame/", "repo_url": "https://github.com/nutcelvischen-jpg/tankgame", "language": "HTML", "is_private": false, "updated_at": "2025-11-25"}, {"name": "trade-retail-lab", "description": "智慧國貿與新零售展示實驗室入口平台", "category": "dashboards", "topics": ["dashboard", "lab-portal", "retail-tech", "smart-trade"], "has_page": true, "demo_url": "https://nutcelvischen-jpg.github.io/trade-retail-lab/", "repo_url": "https://github.com/nutcelvischen-jpg/trade-retail-lab", "language": "JavaScript", "is_private": false, "updated_at": "2026-10-19"}, {"name": "tw-stock-dashboard", "description": "7 檔熱門台股看盤儀表板", "category": "dashboards", "topics": [], "has_page": true, "demo_url": "https://nutcelvischen-jpg.github.io/tw-stock-dashboard/", "repo_url": "https://github.com/nutcelvischen-jpg/tw-stock-dashboard", "language": "CSS", "is_private": false, "updated_at": "2026-06-04"}, {"name": "worldbank-demographic-economic-dashboard", "description": "Interactive Demographic & Economic Dashboard based on World Bank Data360 API (Hint 3: Getting Old Before Getting Rich)", "category": "dashboards", "topics": [], "has_page": true, "demo_url": "https://nutcelvischen-jpg.github.io/worldbank-demographic-economic-dashboard/", "repo_url": "https://github.com/nutcelvischen-jpg/worldbank-demographic-economic-dashboard", "language": "HTML", "is_private": false, "updated_at": "2026-10-27"}, {"name": "appscript_skill", "description": "Google Apps Script 輕量級企業行政與進銷存自動化 Skill", "category": "skills", "topics": ["agent-skill", "apps-script", "automation", "erp"], "has_page": false, "demo_url": "", "repo_url": "https://github.com/nutcelvischen-jpg/appscript_skill", "language": "PowerShell", "is_private": false, "updated_at": "2026-10-13"}, {"name": "factory-sim", "description": "AI agent skill: build interactive Three.js digital-twin & factory simulation sites｜讓 AI 建立 Three.js 數位孿生工廠模擬", "category": "skills", "topics": ["agent-skill", "claude-code", "codex", "digital-twin", "simulation", "threejs"], "has_page": false, "demo_url": "", "repo_url": "https://github.com/nutcelvischen-jpg/factory-sim", "language": "JavaScript", "is_private": false, "updated_at": "2026-10-21"}, {"name": "googleworkspaceskill", "description": "Google Workspace & Apps Script 整合自動化 Agent Skill", "category": "skills", "topics": ["agent-skill", "automation", "google-apps-script", "google-workspace"], "has_page": false, "demo_url": "", "repo_url": "https://github.com/nutcelvischen-jpg/googleworkspaceskill", "language": "Python", "is_private": false, "updated_at": "2026-10-27"}, {"name": "motion-study-film", "description": "AI Agent Skill: 12 條經典動畫法則純程式碼運動研究影片生成", "category": "skills", "topics": ["agent-skill", "animation", "gsap", "motion-design"], "has_page": false, "demo_url": "", "repo_url": "https://github.com/nutcelvischen-jpg/motion-study-film", "language": "Web", "is_private": false, "updated_at": "2026-10-20"}, {"name": "motion-video-skill", "description": "AI Agent Skill: HTML + GSAP 動態向量短影音與 Gemini TTS 配音渲染引擎", "category": "skills", "topics": ["agent-skill", "gemini-tts", "gsap", "motion-video"], "has_page": false, "demo_url": "", "repo_url": "https://github.com/nutcelvischen-jpg/motion-video-skill", "language": "Python", "is_private": false, "updated_at": "2026-10-13"}, {"name": "product-promo-video-skill", "description": "AI Agent Skill: 瀏覽器操作錄影與 SaaS 產品動態宣傳片生成", "category": "skills", "topics": ["agent-skill", "automation", "video-generation", "product-promo"], "has_page": false, "demo_url": "", "repo_url": "https://github.com/nutcelvischen-jpg/product-promo-video-skill", "language": "Python", "is_private": false, "updated_at": "2026-10-13"}, {"name": "video-skill2", "description": "", "category": "skills", "topics": [], "has_page": false, "demo_url": "", "repo_url": "https://github.com/nutcelvischen-jpg/video-skill2", "language": "Python", "is_private": true, "updated_at": "2026-10-16"}, {"name": "google-form-survey", "description": "Google 表單問卷連動與即時資料分析系統", "category": "dashboards", "topics": ["automation", "data-analysis", "google-forms", "survey"], "has_page": false, "demo_url": "", "repo_url": "https://github.com/nutcelvischen-jpg/google-form-survey", "language": "JavaScript", "is_private": false, "updated_at": "2026-10-17"}, {"name": "hero_look", "description": "", "category": "campus", "topics": [], "has_page": false, "demo_url": "", "repo_url": "https://github.com/nutcelvischen-jpg/hero_look", "language": "HTML", "is_private": true, "updated_at": "2026-10-17"}, {"name": "icma-lab-chat", "description": "ICMA 智慧商業實驗室 AI 諮詢與引導對話助理", "category": "campus", "topics": ["ai", "chatbot", "lab-assistant", "nutc"], "has_page": false, "demo_url": "", "repo_url": "https://github.com/nutcelvischen-jpg/icma-lab-chat", "language": "TypeScript", "is_private": false, "updated_at": "2026-10-19"}, {"name": "ni-shuo-de-suan", "description": "", "category": "campus", "topics": [], "has_page": false, "demo_url": "", "repo_url": "https://github.com/nutcelvischen-jpg/ni-shuo-de-suan", "language": "HTML", "is_private": true, "updated_at": "2026-10-11"}, {"name": "nutc-ask", "description": "國立臺中科技大學智慧諮詢機器人 (NUTC Q&A Agent)", "category": "campus", "topics": ["campus-assistant", "chatbot", "nutc", "qa-system"], "has_page": false, "demo_url": "", "repo_url": "https://github.com/nutcelvischen-jpg/nutc-ask", "language": "TypeScript", "is_private": false, "updated_at": "2026-10-22"}, {"name": "punch-clock-test", "description": "線上考勤打卡系統測試沙盒", "category": "campus", "topics": ["attendance", "test-sandbox"], "has_page": false, "demo_url": "", "repo_url": "https://github.com/nutcelvischen-jpg/punch-clock-test", "language": "HTML", "is_private": false, "updated_at": "2026-08-06"}];
+
+    let currentCat = 'all';
+    let searchQuery = '';
+
+    const listEl = document.getElementById('repo-list');
+    const countEl = document.getElementById('result-count');
+    const searchInput = document.getElementById('search');
+    const pills = document.querySelectorAll('.pill');
+
+    function render() {
+      const filtered = repos.filter(item => {
+        if (currentCat === 'live' && !item.has_page) return false;
+        if (currentCat !== 'all' && currentCat !== 'live' && item.category !== currentCat) return false;
+
+        if (!searchQuery) return true;
+        const q = searchQuery.toLowerCase();
+        const inName = item.name.toLowerCase().includes(q);
+        const inDesc = (item.description || '').toLowerCase().includes(q);
+        const inTopics = item.topics.some(t => t.toLowerCase().includes(q));
+        return inName || inDesc || inTopics;
+      });
+
+      countEl.textContent = `顯示 ${filtered.length} 個項目 (總共 ${repos.length} 個)`;
+
+      if (filtered.length === 0) {
+        listEl.innerHTML = '<div style="text-align:center; padding: 48px 0; color: var(--text-muted);">沒有符合搜尋條件的專案</div>';
+        return;
+      }
+
+      listEl.innerHTML = filtered.map(item => {
+        const topicsHtml = item.topics.map(t => `<span class="topic-tag">${t}</span>`).join('');
+        const liveBtn = item.has_page
+          ? `<a class="btn btn-primary" href="${item.demo_url}" target="_blank">🌐 在線體驗</a>`
+          : '';
+        const repoBtn = `<a class="btn" href="${item.repo_url}" target="_blank">📦 GitHub</a>`;
+
+        const liveBadge = item.has_page
+          ? `<a class="badge badge-live" href="${item.demo_url}" target="_blank">● 在線版</a>`
+          : '';
+        const skillBadge = item.category === 'skills'
+          ? `<span class="badge badge-skill">Skill</span>`
+          : '';
+
+        return `
+          <article class="repo-item" data-name="${item.name}">
+            <div class="repo-header">
+              <div class="repo-name-wrap">
+                <a class="repo-name" href="${item.repo_url}" target="_blank">${item.name}</a>
+                <span class="badge">Public</span>
+                ${skillBadge}
+                ${liveBadge}
+              </div>
+              <div class="actions">
+                ${liveBtn}
+                ${repoBtn}
+              </div>
+            </div>
+            <p class="repo-desc">${item.description || '暫無描述'}</p>
+            ${topicsHtml ? `<div class="repo-topics">${topicsHtml}</div>` : ''}
+            <div class="repo-footer">
+              <div class="repo-meta">
+                <span>💻 ${item.language}</span>
+                <span>📅 更新：${item.updated_at}</span>
+              </div>
+              <div>分類：${getCategoryLabel(item.category)}</div>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function getCategoryLabel(cat) {
+      switch(cat) {
+        case 'skills': return '🤖 Agent Skill';
+        case 'games': return '🎮 互動遊戲';
+        case 'dashboards': return '📊 數據戰情室';
+        case 'campus': return '🏛️ 校園行政/工具';
+        default: return '工具';
+      }
+    }
+
+    window.addEventListener('keydown', e => {
+      if (e.key === '/' && document.activeElement !== searchInput) {
+        e.preventDefault();
+        searchInput.focus();
+      }
+    });
+
+    searchInput.addEventListener('input', e => {
+      searchQuery = e.target.value.trim();
+      render();
+    });
+
+    pills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        pills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        currentCat = pill.dataset.cat;
+        render();
+      });
+    });
+
+    render();
+  </script>
+</body>
+</html>
